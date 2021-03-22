@@ -2,7 +2,7 @@ package sk.kosickaakademia.spivak.dormitory.entity;
 
 import java.util.Date;
 
-public class User {
+public class Resident {
     private int id;
     private String fname ;
     private String lname ;
@@ -11,12 +11,12 @@ public class User {
     private String city;
     private String room;
 
-    public User(int id, String fname, String lname, Date dob, String country, String city, String room) {
+    public Resident(int id, String fname, String lname, Date dob, String country, String city, String room) {
         this(fname, lname, dob, country, city, room);
         this.id = id;
     }
 
-    public User(String fname, String lname, Date dob, String country, String city, String room) {
+    public Resident(String fname, String lname, Date dob, String country, String city, String room) {
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
