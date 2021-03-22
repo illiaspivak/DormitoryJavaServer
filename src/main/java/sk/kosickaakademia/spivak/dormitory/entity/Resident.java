@@ -25,6 +25,11 @@ public class Resident {
         this.room = room;
     }
 
+    public Resident(String fname, String lname) {
+        this.fname = fname;
+        this.lname = lname;
+    }
+
     public int getId() {
         return id;
     }

@@ -15,9 +15,11 @@ public class App
         Database database = new Database();
         Util util = new Util();
 
-        Resident resident = new Resident("Ilya","Spivak",util.getDateMySQL("1980-12-15"),"Ukraine","Poltava","410b");
-        database.insertNewResident(resident);
-        List<Resident> list = database.getAllResidents();
-        System.out.println(list);
+        List<Resident> list = database.getResidentByRoom("410b");
+
+        for(Resident c : list){
+            System.out.println("   - "+c.getFname() + " " + c.getLname());
+        }
+
     }
 }

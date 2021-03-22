@@ -120,4 +120,38 @@ public class Database {
             }
         return false;
     }
+
+    /**
+     * Creating a list of room residents
+     * @param room
+     * @return List<Resident>
+     */
+    public List<Resident> getResidentByRoom (String room){
+        List<Resident> list = new ArrayList<>();
+        String query = "SELECT * FROM residents WHERE room = ?";
+        log.info("Creating a list of room residents");
+        try{
+            Connection connection = getConnection();
+            if(connection == null){
+                log.error("No connection to the database");
+                return null;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1,room);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String fname = rs.getString("fname");
+                String lname = rs.getString("lname");
+                Resident resident = new Resident(fname,lname);
+                list.add(resident);
+            }
+            closeConnection(connection);
+            log.print("Created a list of room residents");
+            return list;
+        } catch (Exception e) {
+            log.error("The list of residents of the room is not created");
+            log.error(e.toString());
+        }
+        return null;
+    }
 }
