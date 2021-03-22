@@ -154,4 +154,47 @@ public class Database {
         }
         return null;
     }
+
+    /**
+     * Changing a resident's room
+     * @param fname
+     * @param lname
+     * @param room
+     * @return
+     */
+    public boolean changeRoom(String fname, String lname, String room){
+        log.info("Changing a resident's room");
+        if (fname == null || fname.isEmpty()) {
+            log.error("Missing first name");
+            return false;
+        }
+        if (lname == null || lname.isEmpty()) {
+            log.error("Missing last name");
+            return false;
+        }
+        if (room == null || room.isEmpty()) {
+            log.error("Missing room");
+            return false;
+        }
+        String query = "UPDATE residents SET room = ? WHERE fname LIKE ? AND lname LIKE ?";
+        try {
+            Connection connection = getConnection();
+            if(connection == null){
+                log.error("No connection to the database");
+                return false;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1,room);
+            ps.setString(2,fname);
+            ps.setString(3,lname);
+            ps.executeUpdate();
+            log.print("The resident's room has been changed");
+            closeConnection(connection);
+            return true;
+        }catch(Exception ex){
+            log.error("Couldn't change the resident's room");
+            log.error(ex.toString());
+        }
+        return false;
+    }
 }

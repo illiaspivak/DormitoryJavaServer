@@ -15,7 +15,9 @@ public class App
         Database database = new Database();
         Util util = new Util();
 
-        List<Resident> list = database.getResidentByRoom("410b");
+        database.changeRoom("Ilya", "Spivak", "405a");
+
+        List<Resident> list = database.getResidentByRoom("405a");
 
         for(Resident c : list){
             System.out.println("   - "+c.getFname() + " " + c.getLname());
