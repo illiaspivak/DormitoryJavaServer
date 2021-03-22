@@ -33,4 +33,14 @@ public class Util {
         }
         return null;
     }
+
+    /**
+     * Current date and time
+     * @return yyyy-MM-dd HH:mm:ss
+     */
+    public String getCurrentTime(){
+        Date dateNow = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formatForDateNow.format(dateNow);
+    }
 }
