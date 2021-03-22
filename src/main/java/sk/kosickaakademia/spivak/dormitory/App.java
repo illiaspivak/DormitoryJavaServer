@@ -15,13 +15,9 @@ public class App
         Database database = new Database();
         Util util = new Util();
 
-        database.changeRoom("Ilya", "Spivak", "405a");
+        database.deleteResident("Vlad", "Skobley");
 
-        List<Resident> list = database.getResidentByRoom("405a");
-
-        for(Resident c : list){
-            System.out.println("   - "+c.getFname() + " " + c.getLname());
-        }
-
+        List<Resident> list = database.getAllResidents();
+        System.out.println(list);
     }
 }

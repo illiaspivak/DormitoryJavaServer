@@ -197,4 +197,41 @@ public class Database {
         }
         return false;
     }
+
+    /**
+     * Deleting information about a resident
+     * @param fname
+     * @param lname
+     * @return
+     */
+    public boolean deleteResident(String fname, String lname){
+        log.info("Deleting information about a resident");
+        if (fname == null || fname.isEmpty()) {
+            log.error("Missing first name");
+            return false;
+        }
+        if (lname == null || lname.isEmpty()) {
+            log.error("Missing last name");
+            return false;
+        }
+        String query = "DELETE FROM residents WHERE fname LIKE ? AND lname LIKE ?";
+        try {
+            Connection connection = getConnection();
+            if(connection == null){
+                log.error("No connection to the database");
+                return false;
+            }
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1,fname);
+            ps.setString(2,lname);
+            ps.executeUpdate();
+            log.print("Information about the resident has been deleted");
+            closeConnection(connection);
+            return true;
+        } catch (Exception ex) {
+            log.error("Information about the resident has not been deleted");
+            log.error(ex.toString());
+        }
+        return false;
+    }
 }
