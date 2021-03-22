@@ -15,9 +15,6 @@ public class App
         Database database = new Database();
         Util util = new Util();
 
-        database.deleteResident("Vlad", "Skobley");
-
-        List<Resident> list = database.getAllResidents();
-        System.out.println(list);
+        System.out.println(util.getJson(database.getAllResidents().get(1)));
     }
 }
