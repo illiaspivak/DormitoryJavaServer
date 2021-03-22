@@ -8,6 +8,7 @@ import sk.kosickaakademia.spivak.dormitory.log.Log;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Util {
     Log log = new Log();
@@ -68,6 +69,34 @@ public class Util {
         userJson.put("country ",resident.getCountry());
         userJson.put("city ",resident.getCity());
         userJson.put("room ",resident.getRoom());
+        object.put("residents",jsonArray);
+        return object.toJSONString();
+    }
+
+    /**
+     * Creating the json about residents
+     * @param residents
+     * @return Json
+     */
+    public String getJson (List<Resident> residents){
+        log.info("Creating the json about residents");
+        if (residents.isEmpty()){
+            return "{}";
+        }
+        JSONObject object = new JSONObject();
+        object.put("datetime",getCurrentTime());
+        object.put("size",residents.size());
+        JSONArray jsonArray = new JSONArray();
+        for (Resident resident: residents){
+            JSONObject userJson = new JSONObject();
+            userJson.put("fname",resident.getFname());
+            userJson.put("lname",resident.getLname());
+            userJson.put("dob",resident.getDob());
+            userJson.put("country ",resident.getCountry());
+            userJson.put("city ",resident.getCity());
+            userJson.put("room ",resident.getRoom());
+            jsonArray.add(userJson);
+        }
         object.put("residents",jsonArray);
         return object.toJSONString();
     }

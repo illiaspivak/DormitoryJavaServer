@@ -15,6 +15,6 @@ public class App
         Database database = new Database();
         Util util = new Util();
 
-        System.out.println(util.getJson(database.getAllResidents().get(1)));
+        System.out.println(util.getJson(database.getAllResidents()));
     }
 }
