@@ -20,7 +20,7 @@ public class Controller {
 
     /**
      * Method GET: Show all residents
-     * @return
+     * @return json
      */
     @GetMapping("/residents")
     public ResponseEntity<String> getAllResidents(){
@@ -29,6 +29,11 @@ public class Controller {
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
     }
 
+    /**
+     * Method POST: Adding a new resident to the database
+     * @param data
+     * @return status
+     */
     @PostMapping("/resident/new")
     public ResponseEntity<String> insertNewResident(@RequestBody String data){
         try {
@@ -65,6 +70,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Method PUT: Changing a resident's room
+     * @param fname
+     * @param lname
+     * @param room
+     * @return status
+     */
     @PutMapping(path = "/resident/room")
     public ResponseEntity<String> changeRoom(@PathParam("fname") String fname, @PathParam("lname") String lname, @PathParam("room") String room){
         if (fname == null || fname.isEmpty() || lname == null || lname.isEmpty() || room == null || room.isEmpty()){
@@ -79,6 +91,28 @@ public class Controller {
             return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body("The resident's room has been changed");
         } else {
             return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body("Couldn't change the resident's room");
+        }
+    }
+
+    /**
+     * Method DELETE: Deleting information about a resident
+     * @param fname
+     * @param lname
+     * @return
+     */
+    @DeleteMapping(path = "/resident/delete")
+    public ResponseEntity<String> deleteResident(@PathParam("fname") String fname, @PathParam("lname") String lname){
+        if (fname == null || fname.isEmpty() || lname == null || lname.isEmpty()){
+            log.error("Not enough data");
+            JSONObject objectError = new JSONObject();
+            objectError.put("error", "Not enough data");
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(objectError.toJSONString());
+        }
+        Database database = new Database();
+        if (database.deleteResident(fname,lname)){
+            return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body("Information about the resident has been deleted");
+        } else {
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body("Information about the resident has not been deleted");
         }
     }
 }
